@@ -1,3 +1,4 @@
+
 <div class='container px-5 px-sm-0'>
   <div class='row'>
     <div class='col-md-3'>
@@ -9,6 +10,27 @@
     <div class='col-md-8 offset-md-1'>
       <h2>Books</h2>
       <%= render 'books/index',books: @books %>
+      <%= form_with url: user_search_path(@user), method: :get do |f| %>
+        <%= f.date_field :created_at %>
+        <%= f.submit '検索', class: "btn btn-primary" %>
+      <% end %>
+        <div id="search_result">
+          <% if @search_book.present? %>
+            <h4>検索結果</h4>
+              <table class="table table-bordered">
+                <thead>
+                  <tr>
+                    <th>投稿数</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td><%= @search_book %></td>
+                  </tr>
+                </tbody>
+              </table>
+          <% end %>
+        </div>
       <div class="table_with">
       <h2>過去7日分の投稿数</h2>
         <table class="table table-bordered">
@@ -36,20 +58,29 @@
           </tbody>
         </table>
       </div>
-      <canvas id="myLineChart"></canvas>
+       <canvas id="myLineChart"></canvas>
       <script>
-        $(document).on('turbolinks:load', function(){
+        $(document).on('turbolinks:load', function() {
           var ctx = document.getElementById("myLineChart");
           var myLineChart = new Chart(ctx, {
-            thpe: 'line'
+            type: 'line',
             data: {
-              labels: ['6日前', '5日前', '4日前', '3日前', '2日前', '昨日', '今日'],
+              labels: ['6日前', '5日前', '4日前', '3日前', '2日前', '1日前', '今日'],
               datasets: [
                 {
                   label: '投稿した本の数',
-                  
-                  borderColor: "rgba(0, 0, 255, 1)",
-                  backgroundColor: "rgba(0, 0, 0, 0)"
+                  data: [
+                    <%= @books.created_6days.count %>,
+                    <%= @books.created_5days.count %>,
+                    <%= @books.created_4days.count %>,
+                    <%= @books.created_3days.count %>,
+                    <%= @books.created_2days.count %>,
+                    <%= @books.created_yesterday.count %>,
+                    <%= @books.created_today.count %>
+                  ],
+                  borderColor: "rgba(0,0,255,1)",
+                  backgroundColor: "rgba(0,0,0,0)",
+                  tension: 0.4
                 }
               ],
             },
@@ -58,20 +89,18 @@
                 display: true,
                 text: '7日間の投稿数の比較'
               },
+              responsive: true,
               scales: {
-                yAxes: [{
-                  ticks: {
-                    suggestedMax: 10,
-                    suggestedMin: 0,
-                    stepSize: 1,
-                    callback: function(value, index, values){
-                      return  value
-                    }
-                  }
-                }]
+                y:{
+                  suggestedMin: 0,
+                  suggestedMax: 10
+                },
+                x:{
+                  stacked: true
+                },
               },
             }
-        });
+          });
         });
       </script>
     </div>
