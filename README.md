@@ -1,24 +1,18 @@
-# README
+# bookers2
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+DMMWEBCAMPコンテンツ
 
-Things you may want to cover:
+ユーザ機能を持ち、読んだ本の感想を投稿するサイトです。
 
-* Ruby version
+## 使用記述
 
-* System dependencies
+- Ruby 2.6.3
+- Ruby on Rails 6.1.4.6
 
-* Configuration
+## 機能一覧
 
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+- 画像投稿機能
+- いいね機能(Ajax)
+- コメント機能(Ajax)
+- 検索機能
+- フォロー・フォロワー機能
