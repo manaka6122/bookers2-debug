@@ -8,6 +8,7 @@ DMMWEBCAMPコンテンツ
 
 - Ruby 2.6.3
 - Ruby on Rails 6.1.4.6
+- JavaScript(jQuery)
 
 ## 機能一覧
 
